@@ -1,4 +1,3 @@
-import React from 'react';
 
 function ProfileCard({ name, username, bio, imageUrl }: { name: string, username: string, bio: string, imageUrl: string }) {
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ProfileCard from './profilecard';
 
 function App() {
@@ -15,6 +15,22 @@ function App() {
       ...profile,
       [name]: value
     });
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === 'string') {
+          setProfile({
+            ...profile,
+            imageUrl: reader.result
+          });
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -62,13 +78,12 @@ function App() {
           />
         </div>
         <div style={{ marginBottom: "10px" }}>
-          <label htmlFor="imageUrl">Image URL:</label>
+          <label htmlFor="imageUpload">Upload Image:</label>
           <input
-            type="text"
-            id="imageUrl"
-            name="imageUrl"
-            value={profile.imageUrl}
-            onChange={handleInputChange}
+            type="file"
+            id="imageUpload"
+            accept="image/*"
+            onChange={handleImageUpload}
             style={{ marginLeft: "10px" }}
           />
         </div>
